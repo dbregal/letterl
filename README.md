@@ -1,52 +1,31 @@
 # Letter L — Encrypted Deal Ledger on TON
 
-**Letter L** — MVP-система для зашифрованной фиксации всех операций между участниками трансграничных сделок. В основе — блокчейн TON, публичная цепочка событий, клиентское шифрование и доказуемая история всех соглашений.
+This repository contains an early MVP for Letter L, a prototype system for recording encrypted deal steps on the TON blockchain. Smart contracts are written in Tact and the frontend is built with React and TonConnect.
 
----
+## Structure
 
-## 🧩 Возможности
+```
+/contracts        – Tact smart contracts
+/src              – React frontend code
+/utils/crypto     – client side encryption helpers
+/data/ipfs        – placeholder for off-chain stored files
+```
 
-- Создание уникальной сделки (`deal_id`) между юрлицами
-- Фиксация действий (офферы, согласования, исполнение) в блокчейне
-- Полное клиентское шифрование содержимого (AES-256)
-- Хранение зашифрованных данных вне цепочки (IPFS)
-- Прослеживаемая история событий по каждой сделке
-- Сетевая комиссия за каждое действие (TON gas)
+## Development
 
----
-
-## 📐 Архитектура
-
-| Компонент         | Технология                        |
-|-------------------|-----------------------------------|
-| UI                | React + TonConnect SDK            |
-| Блокчейн          | TON (Tact smart contracts)        |
-| Хранилище данных  | IPFS (Web3.Storage или Filebase)  |
-| Шифрование        | ECIES + AES-256-GCM               |
-| Подпись действий  | TON wallet + client-side signing  |
-
----
-
-## 🔄 Протокол работы
-
-1. **Создание сделки** — участник инициирует `deal_id`, генерирует ключ и рассылает другим участникам
-2. **Добавление шагов** — каждый шаг (оффер, согласование, документ) шифруется, хэш записывается в блокчейн
-3. **Верификация** — каждый может увидеть цепочку действий (но не содержимое)
-4. **Дешифровка** — доступна только участникам, имеющим ключ сделки
-
----
-
-## 🚀 Быстрый старт
+Install dependencies and start the development server:
 
 ```bash
-git clone https://github.com/letter-l/letterl.git
-cd letterl
-
-# Установка зависимостей
 npm install
-
-# Запуск фронтенда
 npm run dev
+```
 
-# Компиляция смарт-контрактов (если установлен Tact)
+Compile the smart contract (requires Tact installed):
+
+```bash
 tact compile contracts/DealLedger.tact
+```
+
+## Demo case
+
+A simple demonstration can be done by running the frontend, creating a deal and adding three steps between two participants. The steps are encrypted locally and their hashes would be recorded on-chain.
